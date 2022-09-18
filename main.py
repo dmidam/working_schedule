@@ -1,5 +1,6 @@
 import psycopg2 as pg2
-
+from tkinter import *
+from tkcalendar import Calendar, DateEntry
 
 def insert_availability(**kwargs):
     conn = None
@@ -56,10 +57,24 @@ def insert_availability(**kwargs):
         if conn is not None:
             conn.close()
 
+#Create an instance of tkinter frame
+root = Tk()
+#Set the Geometry
+root.geometry("750x250")
+root.title("Date Picker")
+#Create a Label
+date_from = Label(root, text="Choose a Date")
+date_from.grid(column=0, row=0)
+#Create a Calendar using DateEntry
+cal = DateEntry(root, width= 16, background="magenta3", foreground="white", bd=2, date_pattern="yyyy-mm-dd")
+cal.grid(column=0, row=1)
+root.mainloop()
 
-insert_availability(start_date='2022-02-01',
-                    end_date="2022-03-01",
-                    start_work='08:00',
-                    end_of_work='10:00',
-                    day='Monday')
+
+
+# insert_availability(start_date='2022-02-01',
+#                     end_date="2022-03-01",
+#                     start_work='08:00',
+#                     end_of_work='10:00',
+#                     day='Monday')
 

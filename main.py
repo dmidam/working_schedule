@@ -38,11 +38,11 @@ def insert_availability(**kwargs):
             day = f"'{day}'"
 
         cur.execute(
-            f"INSERT INTO schedule(data_początkowa,data_końcowa,początek_pracy,koniec_pracy,dzień_tygodnia)"
+            f"INSERT INTO availability(date_1,date_2,start_work,end_work,day_of_the_week)"
             f"VALUES({start_date},{end_date},{start_work},{end_of_work},'{day}')")
         conn.commit()
 
-        cur.execute("SELECT * FROM schedule")
+        cur.execute("SELECT * FROM availability")
         rows = cur.fetchall()
 
         for row in rows:
@@ -63,36 +63,3 @@ insert_availability(start_date='2022-02-01',
                     end_of_work='10:00',
                     day='Monday')
 
-# def insert_availability(start_date, end_date, start_hour, end_hour):
-#     """ insert a new vendor into the vendors table """
-#     sql = """INSERT INTO vendors(vendor_name)
-#              VALUES(%s) RETURNING vendor_id;"""
-#     conn = None
-#     vendor_id = None
-#     try:
-#         # read database configuration
-#         params = config()
-#         # connect to the PostgreSQL database
-#         conn = pg2.connect(database='Work schedule', user='postgres', password='Damdamdam123!')
-#         # create a new cursor
-#         cur = conn.cursor()
-#         # execute the INSERT statement
-#         cur.execute(sql, (start_date, end_date, start_hour, end_hour,))
-#         # get the generated id back
-#         vendor_id = cur.fetchone()[0]
-#         # commit the changes to the database
-#         conn.commit()
-#         # close communication with the database
-#         cur.close()
-#     except (Exception, pg2.DatabaseError) as error:
-#         print(error)
-#     finally:
-#         if conn is not None:
-#             conn.close()
-#
-#     return vendor_id
-#
-#
-# if __name__ == '__main__':
-#     # insert one vendor
-#     insert_availability("2022-02-01", "2022-02-10", "08:00", "10:00")

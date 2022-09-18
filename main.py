@@ -1,5 +1,6 @@
 import psycopg2 as pg2
-from tkinter import *
+import tkinter as tk
+from tkinter import ttk
 from tkcalendar import Calendar, DateEntry
 
 def insert_availability(**kwargs):
@@ -57,18 +58,40 @@ def insert_availability(**kwargs):
         if conn is not None:
             conn.close()
 
-#Create an instance of tkinter frame
-root = Tk()
-#Set the Geometry
-root.geometry("750x250")
-root.title("Date Picker")
-#Create a Label
-date_from = Label(root, text="Choose a Date")
-date_from.grid(column=0, row=0)
-#Create a Calendar using DateEntry
-cal = DateEntry(root, width= 16, background="magenta3", foreground="white", bd=2, date_pattern="yyyy-mm-dd")
-cal.grid(column=0, row=1)
+
+def date_from():
+    def print_sel():
+        print(cal.selection_get())
+
+    top = tk.Toplevel(root)
+
+    cal = Calendar(top,
+                   font="Arial 14", selectmode='day',
+                   cursor="hand1", year=2018, month=2, day=5)
+    cal.pack(fill="both", expand=True)
+    ttk.Button(top, text="ok", command=print_sel).pack()
+
+
+def date_to():
+    def print_sel():
+        print(cal.get_date())
+    top = tk.Toplevel(root)
+
+    ttk.Label(top, text='Choose date').pack(padx=10, pady=10)
+    cal = DateEntry(top, width=12, background='darkblue',
+                    foreground='white', borderwidth=2)
+    cal.pack(padx=10, pady=10)
+    ttk.Button(top, text="ok", command=print_sel).pack()
+
+root = tk.Tk()
+s = ttk.Style(root)
+s.theme_use('clam')
+
+ttk.Button(root, text='Date from', command=date_from).grid(column=0, row=0)
+ttk.Button(root, text='Date to', command=date_to).grid(column=0, row=1)
+
 root.mainloop()
+
 
 
 
